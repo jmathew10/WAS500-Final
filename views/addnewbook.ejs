@@ -1,0 +1,139 @@
+<section class="main-container contact-page">
+  <!-- add new book -->
+  <div class="add-new-book">
+    <div class="form">
+      <div class="form-group">
+        <label for="bookName">Book Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="bookName"
+          name="bookName"
+          placeholder="Enter Book Name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="authorName">Author Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="authorName"
+          name="authorName"
+          placeholder="Enter Author Name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="bookDescription">Book Description</label>
+        <textarea
+          class="form-control"
+          id="bookDescription"
+          name="bookDescription"
+          rows="3"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="bookImage">Book Image</label>
+        <input
+          type="text"
+          class="form-control"
+          id="bookImage"
+          name="bookImage"
+          placeholder="Enter Book Image"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary" onclick="addBook()">
+        Add Book
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .add-new-book {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .add-new-book .form {
+    width: 100%;
+  }
+
+  .add-new-book .form .form-group {
+    margin-bottom: 20px;
+  }
+
+  .add-new-book .form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .add-new-book .form .form-group input,
+  .add-new-book .form .form-group textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .add-new-book .form .form-group textarea {
+    resize: none;
+  }
+
+  .add-new-book .form .form-group button {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ccc;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  function addBook() {
+    // get the values and check if some of them are empty
+    const bookName = document.getElementById("bookName").value;
+    const authorName = document.getElementById("authorName").value;
+    const bookDescription = document.getElementById("bookDescription").value;
+    const bookImage = document.getElementById("bookImage").value;
+
+    // book name and author name are required
+    if (bookName === "" || authorName === "") {
+      bookName === ""
+        ? alert("Book Name is required")
+        : alert("Author Name is required");
+      return;
+    }
+
+    // create a new book object
+    const newBook = {
+      bookName,
+      authorName,
+      bookDescription,
+      bookImage,
+    };
+
+    // send the new book object to the server
+    fetch("/addnewbook", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newBook),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+         // redirect to /admin
+          window.location.href = "/admin";
+        } else {
+          alert("Something went wrong");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+</script>

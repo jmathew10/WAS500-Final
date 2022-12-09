@@ -1,0 +1,13 @@
+<section class="main-container books">
+  <% for (var i = 0; i < books.length; i++) { %>
+  <article class="book-item">
+    <a href="/books/<%= books[i]._id %>">
+      <% if (books[i].bookImage) { %>
+      <img class="books-image" src="<%= books[i].bookImage %>" alt="<%= books[i].title %>" onerror="this.src='https://via.placeholder.com/150x150'" />
+      <% } %>
+      <br />
+      <span class="book-title"><%=books[i].name %></span>
+    </a>
+  </article>
+  <% } %>
+</section>
